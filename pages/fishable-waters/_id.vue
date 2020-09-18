@@ -331,7 +331,7 @@ export default {
 
 <style scoped>
 #map {
-  height: 50vh;
+  height: 66vh;
 }
 
 .img-container {
