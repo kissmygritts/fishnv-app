@@ -45,7 +45,7 @@
 
       <footer class="text-center mt-auto mb-2">
         <nuxt-link to="/" class="text-gray-800 hover:text-blue-500">
-          Fish NV Home
+          FishNV Home
         </nuxt-link>
       </footer>
     </aside>
