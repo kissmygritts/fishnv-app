@@ -32,7 +32,7 @@
             class="w-full sm:w-64 text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded-sm text-lg"
             prefetch
           >
-            Explore the Map!
+            Where Can I Fish?
           </nuxt-link>
           <a
             href="https://nevada.licensing.kalkomey.com/"
@@ -51,7 +51,7 @@
       <div class="container px-5 lg:px-48 xl:px-64 py-24 mx-auto">
         <div class="text-center mb-12">
           <h2 class="text-2xl font-medium text-center title-font text-gray-800 mb-4">
-            The FishNV Map
+            The Fish NV Map
           </h2>
           <p class="text-base leading-relaxed mx-auto px-12">
             Fish NV is an application to help you find ideal fishing locations.

@@ -24,7 +24,7 @@
               class="bg-blue-500 text-white border-0 py-1 px-4 focus:outline-none hover:bg-blue-600 rounded-sm text-base"
               prefetch
             >
-              Explore Map
+              Where Can I Fish?
             </nuxt-link>
           </div>
         </div>

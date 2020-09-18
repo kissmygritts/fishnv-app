@@ -29,7 +29,7 @@
           to="/map"
           class="pl-2 text-blue-700 underline"
         >
-          Explore Map
+          Go To Map
         </nuxt-link>
       </div>
     </header>
