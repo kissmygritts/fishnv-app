@@ -25,7 +25,7 @@
             :key="index"
             :value="fish"
           >
-            {{ fish }}
+            {{ toTitleCase(fish) }}
           </option>
         </select>
         <div
@@ -109,7 +109,6 @@ export default {
         selected: null,
         options: [
           '',
-          'arctic grayling',
           'black crappie',
           'bluegill sunfish',
           'bonneville cutthoat trout',
@@ -120,31 +119,27 @@ export default {
           'bullhead catfish',
           'carp',
           'channel catfish',
-          'crappie',
           'cutthroat',
-          'golden trout',
           'green sunfish',
           'kokanee salmon',
           'lahontan cutthroat trout',
           'largemouth bass',
           'mackinaw trout',
-          'northern pike',
           'pumpkinseed',
           'rainbow trout',
           'redband trout',
           'redear sunfish',
           'sacramento perch',
-          'silver salmon',
           'smallmouth bass',
           'spotted bass',
           'striped bass',
-          'tiger musky',
+          'tiger muskie',
           'tiger trout',
           'walleye',
           'white bass',
           'white catfish',
           'white crappie',
-          'whitefish',
+          'mountian whitefish',
           'wiper',
           'yellow perch',
           'yellowstone cutthroat trout'
@@ -185,11 +180,24 @@ export default {
 
       // call selected method to run search
       this.selected()
+    },
+
+    toTitleCase (str) {
+      return str
+        .toLowerCase()
+        .split(' ')
+        .map((s) => {
+          return s.charAt(0).toUpperCase() + s.slice(1)
+        })
+        .join(' ')
     }
   }
 }
 </script>
 
 <style>
-
+select,
+select option {
+  text-transform: capitalize
+}
 </style>
