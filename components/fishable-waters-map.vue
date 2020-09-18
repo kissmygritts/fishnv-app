@@ -42,17 +42,13 @@ export default {
     return {
       tiles: [
         {
-          name: 'Default',
+          name: 'Topo',
           visible: true,
-          url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{s}.png'
+          url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
         }, {
           name: 'Satelitte',
           visible: false,
           url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
-        }, {
-          name: 'Topo',
-          visible: false,
-          url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
         }
       ],
       center: [38.64954285997146, -116.77592011899117],
