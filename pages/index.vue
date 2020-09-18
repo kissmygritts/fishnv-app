@@ -12,9 +12,12 @@
         id="cta"
         class="text-white w-full md:w-3/4 lg:w-7/12 px-4 md:text-center"
       >
-        <h1 class="text-3xl leading-tight font-light text-shadow">
-          534 Fishable Waters and 39 Sport Fish Species
+        <h1 class="text-4xl leading-tight font-bold text-shadow">
+          Welcome to Your Online Guide to Nevada's Fish and Fishable Waters
         </h1>
+        <h2 class="text-3xl leading-tight font-light text-shadow mt-4">
+          534 Fishable Waters and 39 Sport Fish Species
+        </h2>
         <p class="mt-6 text-xl font-light leading-snug text-shadow">
           From desert creeks to high mountain lakes
           Nevada offers endless fishing possibilites. We've
