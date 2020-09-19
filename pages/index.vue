@@ -51,7 +51,7 @@
       <div class="container px-5 lg:px-48 xl:px-64 py-24 mx-auto">
         <div class="text-center mb-12">
           <h2 class="text-2xl font-medium text-center title-font text-gray-800 mb-4">
-            The Fish NV Map
+            The FishNV Map
           </h2>
           <p class="text-base leading-relaxed mx-auto px-12">
             Fish NV is an application to help you find ideal fishing locations.
