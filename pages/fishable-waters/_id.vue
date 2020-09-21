@@ -115,7 +115,7 @@
               <span v-if="props.column.field === 'species'">
                 <nuxt-link
                   :to="{name: 'species-id', params: { id: props.row.species_id }}"
-                  class="underline text-blue-700"
+                  class="underline text-blue-700 capitalize"
                   prefetch
                 >
                   {{ props.row.species }}

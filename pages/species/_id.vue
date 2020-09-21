@@ -90,14 +90,14 @@
       <!-- map preamble -->
       <div class="article__content mt-16">
         <h2 class="text-4xl tracking-wide">
-          Where to find {{ species.species }}
+          Where to find <span class="capitalize">{{ species.species }}</span>
         </h2>
         <p class="text-lg font-thin text-gray-700 mt-6">
           Based on data collected by, and the experience of NDOW fisheries biologists,
-          {{ species.species }} have been documented in the water bodies shown in the
+          <span class="capitalize">{{ species.species }}</span> have been documented in the water bodies shown in the
           map below. We make every effort to ensure our data is complete and accurate.
-          That said, it is possible to catch {{ species.species }} outside of a water
-          body shown below. It is also possible to not catch a {{ species.species }} in
+          That said, it is possible to catch <span class="capitalize">{{ species.species }}</span> outside of a water
+          body shown below. It is also possible to not catch a <span class="capitalize">{{ species.species }}</span> in
           the waters shown below. They call it fishing for a reason.
         </p>
       </div>
@@ -120,12 +120,14 @@
       <!-- table preamble -->
       <div class="article__content mt-16">
         <h2 class="text-4xl tracking-wide">
-          All {{ species.species }} entries
+          All <span class="capitalize">{{ species.species }}</span> entries
         </h2>
         <p class="text-lg font-thin text-gray-700 mt-6">
-          Below is a table of {{ species.species }} submitted to NDOW through the
+          Below is a table of <span class="capitalize">{{ species.species }}</span> submitted to NDOW through the
           trophy fish program. For more information about the trophy fish program
-          see this link (add link).
+          <a href="http://www.ndow.org/Fish/Angler_Recognition/Trophy_Fish/" target="_blank">
+            see this link
+          </a>.
         </p>
 
         <!-- table row legend -->
@@ -137,19 +139,19 @@
             <div class="flex items-center pt-2">
               <div class="bg-yellow-200 w-8 h-8 border" />
               <div class="pl-4">
-                State Record - this fish is the largest caught of the specified species
+                State Record - this fish is the largest <span class="capitalize">{{ species.species }}</span> caught in Nevada.
               </div>
             </div>
             <div class="flex items-center pt-2">
               <div class="bg-blue-100 w-8 h-8 border" />
               <div class="pl-4">
-                Water Record - this fish is the largest caught in the specified fishable water
+                Water Record - this fish is the largest <span class="capitalize">{{ species.species }}</span> caught in the specified fishable water.
               </div>
             </div>
             <div class="flex items-center pt-2">
               <div class="bg-purple-100 w-8 h-8 border" />
               <div class="pl-4">
-                Trophy Fish - this fish meets the minimum trophy requirements
+                Trophy Fish - this fish meets the minimum trophy requirements for <span class="capitalize">{{ species.species }}</span>
               </div>
             </div>
           </div>
