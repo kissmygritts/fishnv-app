@@ -402,7 +402,7 @@ export default {
 
 .article__map--bleed {
   grid-column: bleed;
-  height: 500px;
+  height: 750px;
 }
 
 .article__table--bleed {
