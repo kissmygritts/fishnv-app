@@ -111,7 +111,7 @@ export default {
           '',
           'black crappie',
           'bluegill sunfish',
-          'bonneville cutthoat trout',
+          'bonneville cutthroat trout',
           'bowcutt trout',
           'brook trout',
           'brown trout',
@@ -139,7 +139,7 @@ export default {
           'white bass',
           'white catfish',
           'white crappie',
-          'mountian whitefish',
+          'mountain whitefish',
           'wiper',
           'yellow perch',
           'yellowstone cutthroat trout'
