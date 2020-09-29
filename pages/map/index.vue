@@ -192,7 +192,7 @@ export default {
   },
 
   mounted () {
-    this.searchFishableWaters({ params: { s: null } })
+    this.searchFishableWaters({ params: {} })
   },
 
   methods: {
@@ -219,31 +219,17 @@ export default {
 
     async searchFishableWaters ({ params }) {
       this.search.loading = true
-
-      // set search.params -- probably not needed
       this.search.params = params
 
-      // if params, do the thing
-      if (params.s) {
-        // init query string object
-        const qs = new URLSearchParams()
-        qs.append('s', params.s)
-        const url = `/api/fishable-waters?${qs.toString()}`
+      const baseUrl = '/api/fishable-waters'
+      const qs = new URLSearchParams(params)
+      const url = qs.toString() === '' ? baseUrl : `${baseUrl}?${qs.toString()}`
 
-        /* eslint-disable-next-line */
-        console.log(url)
+      /* eslint-disable-next-line */
+      console.log(qs.toString())
+      const res = await this.$axios.get(url)
 
-        // start query to search
-        const res = await this.$axios.get(url)
-        this.search.results = res.data
-      } else {
-        // else, no params or params are null, return all results
-        const res = await this.$axios.get('/api/fishable-waters')
-
-        this.search.results = res.data
-        this.search.params = null
-      }
-
+      this.search.results = res.data
       this.search.loading = false
     },
 

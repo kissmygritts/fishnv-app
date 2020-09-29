@@ -54,7 +54,6 @@
           v-model="waterType.selected"
           name="water-type"
           class="block appearance-none w-full bg-white px-4 py-3 pr-8 rounded-md shadow-sm leading-tight focus:outline-none focus:shadow-outline"
-          @change="selected"
         >
           <option value="" />
           <option value="creek">
@@ -97,6 +96,8 @@
 </template>
 
 <script>
+import { removeNullish } from '@/assets/js/util.js'
+
 export default {
   name: 'SearchContainer',
 
@@ -149,28 +150,20 @@ export default {
   },
 
   computed: {
-    payload () {
-      const speciesString = this.species.selected
-        ? Array.isArray(this.species)
-          ? this.species.selected.join(' or ')
-          : this.species.selected
-        : ''
-      const waterString = this.waterType.selected || ''
-
-      const s = [speciesString, waterString]
-        .filter(str => str !== '')
-        .join()
-
-      return {
-        s: s === '' ? null : s
+    searchFilters () {
+      const filters = {
+        species: this.species.selected,
+        water_type: this.waterType.selected
       }
+
+      return removeNullish(filters)
     }
   },
 
   methods: {
     selected (e) {
       this.$emit('selected', {
-        params: this.payload
+        params: this.searchFilters
       })
     },
 
