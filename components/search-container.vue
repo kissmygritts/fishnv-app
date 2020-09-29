@@ -54,16 +54,17 @@
           v-model="waterType.selected"
           name="water-type"
           class="block appearance-none w-full bg-white px-4 py-3 pr-8 rounded-md shadow-sm leading-tight focus:outline-none focus:shadow-outline"
+          @change="selected"
         >
           <option value="" />
           <option value="creek or stream">
             Creek or Stream
           </option>
-          <option value="river">
-            River
-          </option>
           <option value="lake or reservoir">
             Lake or Reservoir
+          </option>
+          <option value="river">
+            River
           </option>
           <option value="urban fishery">
             Urban Fishery
@@ -315,8 +316,4 @@ export default {
 </script>
 
 <style>
-select,
-select option {
-  text-transform: capitalize
-}
 </style>
