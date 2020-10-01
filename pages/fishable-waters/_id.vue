@@ -140,11 +140,17 @@
           </div>
           <div class="w-4/5 px-6 text-center md:text-left md:w-1/2 lg:w-1/3 md:-ml-8 lg:ml-0">
             <h3 class="text-gray-800 text-xl tracking-wide uppercase leading-loose">
-              You can be first!
+              Report you trophies!
             </h3>
             <p class="text-gray-700">
-              Fish have not been caught and reported to NDOW from {{ fishableWater.water_name }}.
-              You can be the first!
+              You can be the first to catch and report a trophy fish or water
+              record from {{ fishableWater.water_name }}. Submit you catch to NDOW's.
+              <a
+                href="http://www.ndow.org/Fish/Angler_Recognition/Trophy_Fish/"
+                class="text-blue-700 underline"
+              >
+                Trophy Fish Program
+              </a>
             </p>
             <div class="mt-6">
               <a
