@@ -81,7 +81,7 @@
       <!-- img -->
       <div class="article__img--full">
         <img
-          src="~/assets/img/rainbow-trout.jpg"
+          src="https://ndow-cdn.s3-us-west-2.amazonaws.com/fishnv/rainbow-trout.jpg"
           alt="rainbow trout in a stream"
           class="article__img"
         >

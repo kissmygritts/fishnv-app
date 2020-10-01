@@ -135,7 +135,7 @@
             <img
               id="img"
               class="object-contain h-full w-full"
-              src="~/assets/img/undraw_fishing_hoxa.png"
+              src="https://ndow-cdn.s3-us-west-2.amazonaws.com/fishnv/undraw_fishing_hoxa.png"
             >
           </div>
           <div class="w-4/5 px-6 text-center md:text-left md:w-1/2 lg:w-1/3 md:-ml-8 lg:ml-0">

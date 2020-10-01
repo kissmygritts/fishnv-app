@@ -168,9 +168,7 @@ export default {
       rgba(0, 0, 0, 0.5),
       rgba(0, 0, 0, 0.05)
     ),
-    url(~assets/img/hero-img.jpg)
-    /* url(https://source.unsplash.com/qNhstTawQrI/1920x1080); */
-    /* background-image: url(https://source.unsplash.com/qNhstTawQrI/1600x900); */
+    url(https://ndow-cdn.s3-us-west-2.amazonaws.com/fishnv/hero-img.jpg)
 }
 
 #cta {
