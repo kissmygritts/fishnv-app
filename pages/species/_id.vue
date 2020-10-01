@@ -125,7 +125,11 @@
         <p class="text-lg font-thin text-gray-700 mt-6">
           Below is a table of <span class="capitalize">{{ species.species }}</span> submitted to NDOW through the
           trophy fish program. For more information about the trophy fish program
-          <a href="http://www.ndow.org/Fish/Angler_Recognition/Trophy_Fish/" target="_blank">
+          <a
+            href="http://www.ndow.org/Fish/Angler_Recognition/Trophy_Fish/"
+            target="_blank"
+            class="text-blue-700 underline"
+          >
             see this link
           </a>.
         </p>

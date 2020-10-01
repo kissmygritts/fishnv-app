@@ -68,7 +68,14 @@
             <p class="text-lg font-thin text-gray-700 mt-6">
               The table below shows all the fish caught at {{ fishableWater.water_name }}
               and submitted to NDOW as part of the Trophy Fish Program. For more information
-              about the trophy fish program see this link (add link).
+              about the Trophy Fish Program
+              <a
+                href="http://www.ndow.org/Fish/Angler_Recognition/Trophy_Fish/"
+                target="_blank"
+                class="text-blue-700 underline"
+              >
+                see this link
+              </a>.
             </p>
 
             <!-- table legend -->
