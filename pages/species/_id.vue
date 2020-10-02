@@ -81,7 +81,7 @@
       <!-- img -->
       <div class="article__img--full">
         <img
-          src="https://ndow-cdn.s3-us-west-2.amazonaws.com/fishnv/rainbow-trout.jpg"
+          :src="photoUrl"
           alt="rainbow trout in a stream"
           class="article__img"
         >
@@ -201,6 +201,42 @@ import { VueGoodTable } from 'vue-good-table'
 import 'vue-good-table/dist/vue-good-table.css'
 import GeoJsonMap from '@/components/geojson-map.vue'
 
+const speciesImg = {
+  'Sacramento perch': null,
+  'black crappie': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/black-crappie/black-crappie.jpg',
+  'bluegill sunfish': null,
+  'bonneville cutthroat trout': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/bonneville-cutthroat-trout/bonneville-cutthroat-trout.jpg',
+  'bowcutt trout': null,
+  'brook trout': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/brook-trout/brook-trout.jpg',
+  'brown trout': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/brown-trout/brown-trout.jpg',
+  'bull trout': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/bull-trout/bull-trout.jpg',
+  'bullhead catfish': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/bullhead-catfish/bullhead-catfish.jpg',
+  'carp': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/carp/carp.jpg',
+  'channel catfish': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/channel-catfish/channel-catfish.jpg',
+  'green sunfish': null,
+  'kokanee salmon': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/kokanee-salmon/kokanee-salmon.jpg',
+  'lahontan cutthroat trout': null,
+  'largemouth bass': null,
+  'mackinaw trout': null,
+  'mountain whitefish': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/mountain-whitefish/mountain-whitefish.jpg',
+  'pumpkinseed': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/pumpkinseed-sunfish/pumpkinseed-sunfish.jpg',
+  'rainbow trout': null,
+  'redband trout': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/redband-trout/redband-trout.jpg',
+  'redear sunfish': null,
+  'smallmouth bass': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/smallmouth-bass/smallmouth-bass.jpg',
+  'spotted bass': null,
+  'striped bass': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/striped-bass/striped-bass.jpg',
+  'tiger muskie': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/tiger-muskie/tiger-muskie.jpg',
+  'tiger trout': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/tiger-trout/tiger-trout.jpg',
+  'walleye': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/walleye/walleye.jpg',
+  'white bass': null,
+  'white catfish': null,
+  'white crappie': null,
+  'wiper': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/wiper/wiper.jpg',
+  'yellow perch': null,
+  'yellowstone cutthroat trout': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/yellowstone-cutthroat-trout/yellowstone-cutthroat-trout.jpg'
+}
+
 export default {
   components: {
     GeoJsonMap,
@@ -315,12 +351,21 @@ export default {
       return this.hasWaterBodies
         ? this.waterBodies.geojson.features.length
         : 0
+    },
+
+    photoUrl () {
+      return speciesImg[this.species.species] || 'https://via.placeholder.com/1200x800'
     }
   },
 
   created () {
-    this.stateRecord.pounds = this.fishEntries.data[0].pounds
-    this.stateRecord.ounces = this.fishEntries.data[0].ounces
+    if (this.fishEntries.data.length > 0) {
+      this.stateRecord.pounds = this.fishEntries.data[0].pounds || 0
+      this.stateRecord.ounces = this.fishEntries.data[0].ounces || 0
+    } else {
+      this.stateRecord.pounds = '-'
+      this.stateRecord.ounces = '-'
+    }
 
     // this.$nextTick(() => {
     //   this.stateRecord.pounds = this.fishEntries.data[0].pounds

@@ -169,7 +169,8 @@ export default {
       rgba(0, 0, 0, 0.5),
       rgba(0, 0, 0, 0.05)
     ),
-    url(https://ndow-cdn.s3-us-west-2.amazonaws.com/fishnv/hero-img.jpg)
+    url(https://ndow-cdn.s3-us-west-2.amazonaws.com/species/brook-trout/brook-trout-hero.jpg)
+    /* url(https://ndow-cdn.s3-us-west-2.amazonaws.com/fishnv/hero-img.jpg) */
 }
 
 #cta {
