@@ -243,7 +243,6 @@ export default {
           'bullhead catfish',
           'carp',
           'channel catfish',
-          'cutthroat',
           'green sunfish',
           'kokanee salmon',
           'lahontan cutthroat trout',
