@@ -4,6 +4,7 @@
 
 ### ElasticBeanstalk ###
 .elasticbeanstalk/
+Dockerrun.aws.json
 
 ### macOS ###
 # General

@@ -72,14 +72,14 @@
       </div>
 
       <!-- description -->
-      <div class="article__content mt-20 bg-white rounded shadow-2xl -mb-32 p-8 z-0">
+      <div class="article__content mt-20 bg-white rounded shadow-2xl p-8 z-50">
         <p class="text-xl text-gray-600 italic font-light text-center">
           {{ species.description }}
         </p>
       </div>
 
       <!-- img -->
-      <div class="article__img--full">
+      <div class="article__img--full -mt-12">
         <img
           :src="photoUrl"
           alt="rainbow trout in a stream"
@@ -354,7 +354,8 @@ export default {
     },
 
     photoUrl () {
-      return speciesImg[this.species.species] || 'https://via.placeholder.com/1200x800'
+      return speciesImg[this.species.species] || 'https://ndow-cdn.s3-us-west-2.amazonaws.com/coming-soon-1200x800.jpg'
+      // 'https://via.placeholder.com/1200x800'
     }
   },
 

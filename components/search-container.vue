@@ -4,7 +4,7 @@
       Filter Fishable Waters
     </h2>
     <p
-      class="text-sm text-orange-700 underline cursor-pointer"
+      class="text-sm text-saffron underline cursor-pointer"
       @click="clearFilters"
     >
       Clear Filters

@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-gray-800">
+  <nav class="bg-oxford">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
@@ -21,7 +21,7 @@
           <div class="ml-4 flex items-center md:ml-6">
             <nuxt-link
               to="/map"
-              class="bg-blue-500 text-white border-0 py-1 px-4 focus:outline-none hover:bg-blue-600 rounded-sm text-base"
+              class="bg-olive text-white border-0 py-1 px-4 focus:outline-none hover:bg-olive-darker rounded-sm text-base"
               prefetch
             >
               Where Can I Fish?

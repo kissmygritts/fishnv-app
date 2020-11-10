@@ -164,7 +164,7 @@
                 href="https://nevada.licensing.kalkomey.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                class="bg-olive hover:bg-olive-darker text-white font-bold py-2 px-4 rounded"
               >
                 Buy a fishing license
               </a>

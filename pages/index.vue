@@ -26,7 +26,7 @@
         <div class="flex flex-wrap w-full mt-8 text-center md:justify-center">
           <nuxt-link
             to="/map"
-            class="w-full sm:w-64 text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded-sm text-lg"
+            class="w-full sm:w-64 text-white bg-olive border-0 py-2 px-6 focus:outline-none hover:bg-olive-darker rounded-sm text-lg"
             prefetch
           >
             Where Can I Fish?
@@ -142,7 +142,7 @@
     </section>
 
     <!-- footer -->
-    <footer class="text-gray-500 bg-gray-800 body-font">
+    <footer class="text-gray-500 bg-oxford body-font">
       <div class="container px-5 py-8 mx-auto flex items-center">
         <a href="http://www.ndow.org" class="title-font font-medium text-white" target="_blank" rel="noopener noreferrer">
           Nevada Department of Wildlife
