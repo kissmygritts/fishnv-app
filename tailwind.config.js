@@ -6,6 +6,10 @@
 */
 module.exports = {
   theme: {
+    fontFamily: {
+      header: ['"Roboto Condensed"'],
+      content: ['Roboto']
+    },
     extend: {
       colors: {
         carolina: '#589fd6',

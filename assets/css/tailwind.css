@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
 /* purgecss start ignore */
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
@@ -6,4 +8,17 @@
 
 #__layout, #__nuxt {
   height: 100%
+}
+
+body {
+  font-family: 'Roboto';
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Roboto Condensed';
 }
