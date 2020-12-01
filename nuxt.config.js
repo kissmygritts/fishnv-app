@@ -36,7 +36,9 @@ export default {
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    // Doc: https://google-analytics.nuxtjs.org
+    '@nuxtjs/google-analytics'
   ],
   /*
   ** Nuxt.js modules
@@ -66,6 +68,11 @@ export default {
       pathRewrite: { '^/api/': '' }
     }
   },
+
+  googleAnalytics: {
+    id: 'UA-7416662-5'
+  },
+
   /*
   ** Build configuration
   */
