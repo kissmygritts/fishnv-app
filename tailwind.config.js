@@ -1,15 +1,13 @@
-/*
-** TailwindCSS Configuration File
-**
-** Docs: https://tailwindcss.com/docs/configuration
-** Default: https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js
-*/
 module.exports = {
+  purge: [
+    './components/**/*.{vue,js}',
+    './layouts/**/*.vue',
+    './pages/**/*.vue',
+    './plugins/**/*.js',
+    './nuxt.config.js'
+  ],
+  darkMode: false, // or 'media' or 'class'
   theme: {
-    fontFamily: {
-      header: ['"Roboto Condensed"'],
-      content: ['Roboto']
-    },
     extend: {
       colors: {
         carolina: '#589fd6',
@@ -18,36 +16,29 @@ module.exports = {
         oxford: {
           lightest: '#2e598a',
           lighter: '#24456b',
-          default: '#19304b',
+          DEFAULT: '#19304b',
           darker: '#14273d',
           darkest: '#0f1e2e'
         },
         olive: {
           lightest: '#acc3af',
           lighter: '#95b298',
-          default: '#7a9e7f',
+          DEFAULT: '#7a9e7f',
           darker: '#678e6c',
-          darkest: '56765a'
+          darkest: '#56765a'
         },
         saffron: {
           lightest: '#f8c9a0',
           lighter: '#f6b379',
-          default: '#f29647',
+          DEFAULT: '#f29647',
           darker: '#f0882d',
           darkest: '#e57310'
         }
       }
     }
   },
-  variants: {},
-  plugins: [],
-  purge: {
-    enabled: process.env.NODE_ENV === 'production',
-    content: [
-      './components/**/*.vue',
-      './layouts/**/*.vue',
-      './pages/**/*.vue',
-      './plugins/**/*.js'
-    ]
-  }
+  variants: {
+    extend: {}
+  },
+  plugins: []
 }

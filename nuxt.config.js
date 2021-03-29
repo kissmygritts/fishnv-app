@@ -73,6 +73,10 @@ export default {
     id: 'UA-7416662-5'
   },
 
+  tailwindcss: {
+    jit: true
+  },
+
   /*
   ** Build configuration
   */
