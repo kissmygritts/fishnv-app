@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { geolocate } from '@/lib/geolocation.js'
+
 /* eslint-disable */
 export default {
   name: 'FishableWatersMap',
@@ -52,7 +54,8 @@ export default {
         }
       ],
       center: [38.64954285997146, -116.77592011899117],
-      zoom: 6
+      zoom: 6,
+      geolocation: undefined
     }
   },
 
@@ -93,12 +96,35 @@ export default {
       return () => ({
         weight: 5
       })
+    },
+
+    // geolocation details
+    hasGeolocation () {
+      const { geolocation } = this
+      return typeof geolocation === 'object' && Object.keys(geolocation).length > 0
+    },
+
+    myCoordinates () {
+      if (!this.hasGeolocation) return undefined
+      const { latitude, longitude } = this.geolocation
+      return [latitude, longitude]
     }
+  },
+
+  async mounted () {
+    const { coords } = await geolocate()
+    this.geolocation = { ...coords }
+
+    this.zoomToLocation()
   },
 
   methods: {
     ready () {
       this.$emit('ready')
+    },
+
+    zoomToLocation () {
+      this.$refs.map.mapObject.flyTo(this.myCoordinates, 12)
     }
   }
 }
