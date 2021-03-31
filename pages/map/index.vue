@@ -4,6 +4,7 @@
     <main class="flex-1 w-full">
       <client-only>
         <fishable-waters-map
+          ref="fishingMap"
           :geojson="geojson"
           @ready="loadGeometry"
         />
@@ -129,6 +130,7 @@ import geobuf from 'geobuf'
 import Pbf from 'pbf'
 import FishableWatersMap from '@/components/fishable-waters-map.vue'
 import SearchContainer from '@/components/search-container.vue'
+import { geolocate } from '@/lib/geolocation.js'
 
 export default {
   components: {
@@ -147,6 +149,7 @@ export default {
         loading: false,
         results: {}
       },
+      geolocation: null,
       watersPanelVisible: false,
       filtersPanelVisible: false
     }
@@ -188,11 +191,25 @@ export default {
       }
 
       return geojson
+    },
+
+    myCoordinates () {
+      const { longitude, latitude } = this.geolocation
+      return !longitude && !latitude
+        ? undefined
+        : [latitude, longitude]
     }
   },
 
   mounted () {
     this.searchFishableWaters({ params: {} })
+
+    this.$nextTick(async () => {
+      const { coords } = await geolocate()
+      this.geolocation = { ...coords }
+
+      this.zoomToLocation()
+    })
   },
 
   methods: {
@@ -243,9 +260,12 @@ export default {
 
       this.geometry.results = geojson
       this.geometry.loading = false
+    },
+
+    zoomToLocation () {
+      this.$refs.fishingMap.$refs.map.mapObject.flyTo(this.myCoordinates, 12)
     }
   }
-
 }
 </script>
 
