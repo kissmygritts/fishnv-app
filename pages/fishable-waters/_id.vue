@@ -1,7 +1,7 @@
 <!-- eslint-disble -->
 <template>
-  <div class="text-gray-900 pb-24">
-    <header class="px-2 py-6 md:px-4 md:py-8 lg:px-8 container mx-auto">
+  <div class="text-gray-900 bg-gray-100 min-h-full pb-32 px-2">
+    <header class="py-6 md:py-8 container mx-auto bg-gray">
       <h1 class="text-4xl leading-loose">
         {{ fishableWater.water_name }}
         <span class="text-2xl font-thin tracking-wide text-gray-600 pl-2">
@@ -32,145 +32,135 @@
           Go To Map
         </nuxt-link>
       </div>
+
+      <notification-danger class="mt-4" />
     </header>
 
-    <!-- map of the fishable water -->
-    <div id="map" class="w-full">
-      <geo-json-map
-        :geojson="fishableWater.geojson"
-        class="w-full"
-      />
-    </div>
+    <!-- grid container -->
+    <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
 
-    <!-- water records -->
-    <div>
-      <!-- if hasFishEntries === true -->
-      <div v-if="hasFishEntries">
-        <div class="bg-gray-100 text-gray-700">
-          <div class="w-100 pt-12 container px-5 py-12 mx-auto">
-            <h2 class="text-2xl tracking-wide font-hairline text-left md:text-center">
-              Water Records
-            </h2>
-            <stat-container
-              :water-records="waterRecords"
-              class="pt-10 pb-5"
-            />
-          </div>
-        </div>
+      <!-- map container -->
+      <div class="h-96 md:h-full bg-green-200 col-span-1 md:col-span-2 rounded-md shadow-lg">
+        <geo-json-map
+          class="rounded-lg"
+          :geojson="fishableWater.geojson"
+        />
+      </div>
 
-        <!-- table of all fish entries -->
-        <div class="w-100 pt-16 container mx-auto">
-          <!-- table description -->
-          <div class="w-7/12 mx-auto">
-            <h2 class="text-4xl tracking-wide ">
-              All Fish Entries
-            </h2>
-            <p class="text-lg font-thin text-gray-700 mt-6">
-              The table below shows all the fish caught at {{ fishableWater.water_name }}
-              and submitted to NDOW as part of the Trophy Fish Program. For more information
-              about the Trophy Fish Program
-              <a
-                href="http://www.ndow.org/Fish/Angler_Recognition/Trophy_Fish/"
-                target="_blank"
-                class="text-blue-700 underline"
+      <!-- nearby waters container -->
+      <div class="col-span-1">
+        <h2 class="py-2 pl-1 text-2xl tracking-wide font-light text-gray-700">Nearby Waters</h2>
+        <nw-container :nearby-waters="nearbyWaters" />
+      </div>
+
+      <!-- trophy fish container -->
+      <div class="cols-span-1 md:col-span-3 mt-12">
+
+        <!-- if hasFishEntries !== true -->
+        <div v-if="!hasFishEntries">
+          <div class="flex flex-wrap items-center justify-center">
+            <div class="img-container">
+              <img
+                id="img"
+                class="object-contain h-full w-full"
+                src="https://ndow-cdn.s3-us-west-2.amazonaws.com/fishnv/undraw_fishing_hoxa.png"
               >
-                see this link
-              </a>.
-            </p>
-
-            <!-- table legend -->
-            <div class="mt-6">
-              <h4 class="text-xl tracking-wide">
-                Table Legend
-              </h4>
-              <div class="text-grey-700 font-thin">
-                <div class="flex items-center pt-2">
-                  <div class="bg-yellow-200 w-8 h-8 border" />
-                  <div class="pl-4">
-                    State Record - this fish is the largest caught of the specified species
-                  </div>
-                </div>
-                <div class="flex items-center pt-2">
-                  <div class="bg-blue-100 w-8 h-8 border" />
-                  <div class="pl-4">
-                    Water Record - this fish is the largest caught in the specified fishable water
-                  </div>
-                </div>
-                <div class="flex items-center pt-2">
-                  <div class="bg-purple-100 w-8 h-8 border" />
-                  <div class="pl-4">
-                    Trophy Fish - this fish meets the minimum trophy requirements
-                  </div>
-                </div>
+            </div>
+            <div class="w-4/5 px-6 text-center md:text-left md:w-1/2 lg:w-1/3 md:-ml-8 lg:ml-0">
+              <h3 class="text-gray-800 text-xl tracking-wide uppercase leading-loose">
+                Report you trophies!
+              </h3>
+              <p class="text-gray-700">
+                You can be the first to catch and report a trophy fish or water
+                record from {{ fishableWater.water_name }}. Submit you catch to NDOW's
+                <a
+                  href="http://www.ndow.org/Fish/Angler_Recognition/Trophy_Fish/"
+                  class="underline text-saffron-darkest hover:text-saffron"
+                >
+                  Trophy Fish Program
+                </a>
+              </p>
+              <div class="mt-6">
+                <a
+                  href="https://nevada.licensing.kalkomey.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="bg-olive hover:bg-olive-darker text-white font-bold py-2 px-4 rounded"
+                >
+                  Buy a fishing license
+                </a>
               </div>
             </div>
           </div>
-
-          <vue-good-table
-            class="pt-10"
-            mode="remote"
-            :pagination-options="paginationOptions"
-            :sort-options="{ enabled: false }"
-            :columns="columns"
-            :rows="rows"
-            :total-rows="fishEntries.totalRecords"
-            :row-style-class="rowStyles"
-            @on-page-change="onPageChange"
-            @on-per-page-change="onPerPageChange"
-          >
-            <template slot="table-row" slot-scope="props">
-              <span v-if="props.column.field === 'species'">
-                <nuxt-link
-                  :to="{name: 'species-id', params: { id: props.row.species_id }}"
-                  class="underline text-blue-700 capitalize"
-                  prefetch
-                >
-                  {{ props.row.species }}
-                </nuxt-link>
-              </span>
-              <span v-else>
-                {{ props.formattedRow[props.column.field] }}
-              </span>
-            </template>
-          </vue-good-table>
         </div>
-      </div>
-      <!-- if hasFishEntreis === false -->
-      <div v-else class="bg-gray-100 py-16">
-        <div class="container mx-auto flex flex-wrap items-center justify-center">
-          <div class="img-container">
-            <img
-              id="img"
-              class="object-contain h-full w-full"
-              src="https://ndow-cdn.s3-us-west-2.amazonaws.com/fishnv/undraw_fishing_hoxa.png"
-            >
-          </div>
-          <div class="w-4/5 px-6 text-center md:text-left md:w-1/2 lg:w-1/3 md:-ml-8 lg:ml-0">
-            <h3 class="text-gray-800 text-xl tracking-wide uppercase leading-loose">
-              Report you trophies!
-            </h3>
-            <p class="text-gray-700">
-              You can be the first to catch and report a trophy fish or water
-              record from {{ fishableWater.water_name }}. Submit you catch to NDOW's.
-              <a
-                href="http://www.ndow.org/Fish/Angler_Recognition/Trophy_Fish/"
-                class="text-blue-700 underline"
-              >
-                Trophy Fish Program
-              </a>
-            </p>
-            <div class="mt-6">
-              <a
-                href="https://nevada.licensing.kalkomey.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="bg-olive hover:bg-olive-darker text-white font-bold py-2 px-4 rounded"
-              >
-                Buy a fishing license
-              </a>
+
+        <!-- if hasFishEntries === true -->
+        <div v-else>
+          <!-- stat container -->
+          <div class="text-gray-700">
+            <div class="w-100">
+              <h2 class="text-2xl tracking-wide font-light">
+                Water Records
+              </h2>
+              <stat-container
+                :water-records="waterRecords"
+                class="pt-10 pb-5"
+              />
             </div>
           </div>
+
+          <!-- trophy fish table -->
+          <div class="w-100 mt-12">
+            <!-- table description -->
+            <div class="w-100 text-gray-700">
+              <h2 class="text-2xl tracking-wide font-light">
+                All Fish Entries
+              </h2>
+              <p class="text-lg font-thin text-gray-700 mt-4">
+                The table below shows all the fish caught at {{ fishableWater.water_name }}
+                and submitted to NDOW as part of the Trophy Fish Program. For more information
+                about the Trophy Fish Program
+                <a
+                  href="http://www.ndow.org/Fish/Angler_Recognition/Trophy_Fish/"
+                  target="_blank"
+                  class="underline text-saffron-darkest hover:text-saffron"
+                >
+                  see this link
+                </a>.
+              </p>
+            </div>
+
+            <vue-good-table
+              class="mt-6"
+              mode="remote"
+              :pagination-options="paginationOptions"
+              :sort-options="{ enabled: false }"
+              :columns="columns"
+              :rows="rows"
+              :total-rows="fishEntries.totalRecords"
+              :row-style-class="rowStyles"
+              @on-page-change="onPageChange"
+              @on-per-page-change="onPerPageChange"
+            >
+              <template slot="table-row" slot-scope="props">
+                <span v-if="props.column.field === 'species'">
+                  <nuxt-link
+                    :to="{name: 'species-id', params: { id: props.row.species_id }}"
+                    class="underline text-saffron-darker capitalize font-light"
+                    prefetch
+                  >
+                    {{ props.row.species }}
+                  </nuxt-link>
+                </span>
+                <span v-else>
+                  {{ props.formattedRow[props.column.field] }}
+                </span>
+              </template>
+            </vue-good-table>
+          </div>
+
         </div>
+
       </div>
     </div>
   </div>
@@ -183,13 +173,17 @@ import 'vue-good-table/dist/vue-good-table.css'
 import GeoJsonMap from '@/components/geojson-map.vue'
 import StatContainer from '@/components/elements/stat-container.vue'
 import TailsTag from '@/components/elements/tails-tag.vue'
+import NotificationDanger from '@/components/notification-danger.vue'
+import NwContainer from '@/components/nearby-waters/nw-container.vue'
 
 export default {
   components: {
     GeoJsonMap,
     StatContainer,
     TailsTag,
-    VueGoodTable
+    VueGoodTable,
+    NotificationDanger,
+    NwContainer
   },
 
   async asyncData ({ params, $axios }) {
@@ -198,12 +192,14 @@ export default {
     const fishableWater = await $axios.$get(url)
     const fishEntries = await $axios.$get(`${url}/fish-entries?order=species&order=desc.fish_weight`)
     const waterRecords = await $axios.$get(`${url}/water-records`)
+    const nearbyWaters = await $axios.$get(`${url}/nearby-waters`)
 
     return {
       fishableWater,
       fishEntries,
-      url,
-      waterRecords
+      waterRecords,
+      nearbyWaters,
+      url
     }
   },
 
