@@ -1,0 +1,36 @@
+.content {
+  @apply max-w-2xl mx-auto px-4 py-16 sm:text-lg text-gray-700
+}
+
+.content h1,
+.content h2 {
+  @apply text-olive-darkest pt-0.5
+}
+
+.content h1 {
+  @apply text-2xl sm:text-3xl leading-loose sm:leading-loose
+}
+
+.content h2 {
+  @apply text-xl sm:text-2xl leading-loose sm:leading-loose
+}
+
+.content p {
+  @apply pb-4
+}
+
+.content a {
+  @apply underline text-saffron-darker hover:text-saffron
+}
+
+.content ul {
+  @apply pb-4
+}
+
+.content ul li {
+  @apply list-disc list-inside
+}
+
+.content img {
+  @apply w-full h-auto pb-4
+}
