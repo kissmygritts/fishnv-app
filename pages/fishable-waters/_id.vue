@@ -1,4 +1,3 @@
-<!-- eslint-disble -->
 <template>
   <div class="text-gray-900 bg-gray-100 min-h-full pb-32 px-2">
     <header class="py-6 md:py-8 container mx-auto bg-gray">
@@ -32,13 +31,10 @@
           Go To Map
         </nuxt-link>
       </div>
-
-      <notification-danger class="mt-4" />
     </header>
 
     <!-- grid container -->
     <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
-
       <!-- map container -->
       <div class="h-96 md:h-full bg-green-200 col-span-1 md:col-span-2 rounded-md shadow-lg">
         <geo-json-map
@@ -49,13 +45,27 @@
 
       <!-- nearby waters container -->
       <div class="col-span-1">
-        <h2 class="py-2 pl-1 text-2xl tracking-wide font-light text-gray-700">Nearby Waters</h2>
+        <h2 class="py-2 pl-1 text-2xl tracking-wide font-light text-gray-700">
+          Nearby Waters
+        </h2>
         <nw-container :nearby-waters="nearbyWaters" />
+      </div>
+
+      <!-- mercury notifications container -->
+      <div class="cols-span-1 md:col-span-3 mt-12">
+        <notification-danger v-if="hasMercuryAdvisories" class="mt-4">
+          <ul class="list-disc list-inside">
+            <li v-for="species in mercuryAdvisories" :key="species.id">
+              <span class="capitalize">
+                {{ species.species }}
+              </span>: {{ species.meals_per_month }} meals per month
+            </li>
+          </ul>
+        </notification-danger>
       </div>
 
       <!-- trophy fish container -->
       <div class="cols-span-1 md:col-span-3 mt-12">
-
         <!-- if hasFishEntries !== true -->
         <div v-if="!hasFishEntries">
           <div class="flex flex-wrap items-center justify-center">
@@ -158,16 +168,13 @@
               </template>
             </vue-good-table>
           </div>
-
         </div>
-
       </div>
     </div>
   </div>
 </template>
 
 <script>
-/* eslint-disable */
 import { VueGoodTable } from 'vue-good-table'
 import 'vue-good-table/dist/vue-good-table.css'
 import GeoJsonMap from '@/components/geojson-map.vue'
@@ -177,6 +184,8 @@ import NotificationDanger from '@/components/notification-danger.vue'
 import NwContainer from '@/components/nearby-waters/nw-container.vue'
 
 export default {
+  name: 'FishableWatersPage',
+
   components: {
     GeoJsonMap,
     StatContainer,
@@ -190,16 +199,19 @@ export default {
     const url = `/api/fishable-waters/${params.id}`
 
     const fishableWater = await $axios.$get(url)
-    const fishEntries = await $axios.$get(`${url}/fish-entries?order=species&order=desc.fish_weight`)
     const waterRecords = await $axios.$get(`${url}/water-records`)
     const nearbyWaters = await $axios.$get(`${url}/nearby-waters`)
+    const mercuryAdvisories = await $axios.$get(`${url}/mercury-advisories`)
+    const fishEntries = await $axios.$get(`api/fish-entries?water_id=${params.id}`)
 
     return {
       fishableWater,
-      fishEntries,
       waterRecords,
       nearbyWaters,
-      url
+      mercuryAdvisories,
+      fishEntries,
+      url,
+      params
     }
   },
 
@@ -248,16 +260,32 @@ export default {
           field: '',
           type: ''
         },
-        page: 1,
+        page: 0,
         perPage: 25
       }
     }
   },
 
   computed: {
+    hasFishEntries () {
+      return this.fishEntries.data.length > 0
+    },
+
+    hasMercuryAdvisories () {
+      return this.mercuryAdvisories.length > 0
+    },
+
+    tags () {
+      return [
+        `${this.fishableWater.region} region`,
+        `${this.fishableWater.county} county`,
+        ...this.fishableWater.species
+      ]
+    },
+
     rows () {
       return this.fishEntries.data
-        .map(m => {
+        .map((m) => {
           const dateCaught = new Date(m.date_caught)
 
           return {
@@ -270,33 +298,16 @@ export default {
             species_id: m.species_id,
             date_caught: dateCaught.getFullYear()
           }
-        }
-      )
+        })
     },
 
     querystring () {
-      let querystring = new URLSearchParams()
-
-      // default ordering, don't change this for now
-      querystring.append('order', 'species')
-      querystring.append('order', 'desc.fish_weight')
-
-      querystring.append('page', this.query.page || 1)
+      const querystring = new URLSearchParams()
+      querystring.append('water_id', this.params.id)
+      querystring.append('page', this.query.page || 0)
       querystring.append('per_page', this.query.perPage || 25)
 
       return querystring.toString()
-    },
-
-    hasFishEntries () {
-      return this.fishEntries.data.length > 0
-    },
-
-    tags () {
-      return [
-        `${this.fishableWater.region} region`,
-        `${this.fishableWater.county} county`,
-        ...this.fishableWater.species
-      ]
     }
   },
 
@@ -316,8 +327,7 @@ export default {
     },
 
     async loadTable () {
-      const url = `${this.url}/fish-entries?${this.querystring}`
-      console.log(url)
+      const url = `/api/fish-entries?${this.querystring}`
       const data = await this.$axios.$get(url)
       this.fishEntries = data
     },
@@ -338,7 +348,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 #map {
   height: 66vh;
 }

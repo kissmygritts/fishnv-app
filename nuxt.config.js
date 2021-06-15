@@ -64,7 +64,7 @@ export default {
 
   proxy: {
     '/api/': {
-      target: process.env.APIURL || 'http://0.0.0.0:8000',
+      target: process.env.APIURL || 'http://0.0.0.0:3000',
       pathRewrite: { '^/api/': '' }
     }
   },

@@ -238,7 +238,7 @@ export default {
     async loadGeometry () {
       this.geometry.loading = true
 
-      const res = await this.$axios.get('/api/geobuf', {
+      const res = await this.$axios.get('/api/features/fishable_waters.geobuf', {
         responseType: 'arraybuffer'
       })
       const geojson = geobuf.decode(new Pbf(res.data))
