@@ -106,7 +106,7 @@
       <div v-if="hasWaterBodies" class="article__map--bleed mt-8">
         <geo-json-map
           :enable-tooltip="true"
-          :geojson="waterBodies.geojson"
+          :geojson="waterBodies"
           class="w-full"
           @feature:click="navigateTo"
         />
@@ -196,7 +196,6 @@
 </template>
 
 <script>
-/* eslint-disable */
 import { VueGoodTable } from 'vue-good-table'
 import 'vue-good-table/dist/vue-good-table.css'
 import GeoJsonMap from '@/components/geojson-map.vue'
@@ -211,7 +210,7 @@ const speciesImg = {
   'brown trout': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/brown-trout/brown-trout.jpg',
   'bull trout': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/bull-trout/bull-trout.jpg',
   'bullhead catfish': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/bullhead-catfish/bullhead-catfish.jpg',
-  'carp': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/carp/carp.jpg',
+  carp: 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/carp/carp.jpg',
   'channel catfish': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/channel-catfish/channel-catfish.jpg',
   'green sunfish': null,
   'kokanee salmon': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/kokanee-salmon/kokanee-salmon.jpg',
@@ -219,7 +218,7 @@ const speciesImg = {
   'largemouth bass': null,
   'mackinaw trout': null,
   'mountain whitefish': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/mountain-whitefish/mountain-whitefish.jpg',
-  'pumpkinseed': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/pumpkinseed-sunfish/pumpkinseed-sunfish.jpg',
+  pumpkinseed: 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/pumpkinseed-sunfish/pumpkinseed-sunfish.jpg',
   'rainbow trout': null,
   'redband trout': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/redband-trout/redband-trout.jpg',
   'redear sunfish': null,
@@ -228,33 +227,36 @@ const speciesImg = {
   'striped bass': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/striped-bass/striped-bass.jpg',
   'tiger muskie': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/tiger-muskie/tiger-muskie.jpg',
   'tiger trout': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/tiger-trout/tiger-trout.jpg',
-  'walleye': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/walleye/walleye.jpg',
+  walleye: 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/walleye/walleye.jpg',
   'white bass': null,
   'white catfish': null,
   'white crappie': null,
-  'wiper': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/wiper/wiper.jpg',
+  wiper: 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/wiper/wiper.jpg',
   'yellow perch': null,
   'yellowstone cutthroat trout': 'https://ndow-cdn.s3-us-west-2.amazonaws.com/species/yellowstone-cutthroat-trout/yellowstone-cutthroat-trout.jpg'
 }
 
 export default {
+  name: 'SpeciesIdPage',
+
   components: {
     GeoJsonMap,
     VueGoodTable
   },
 
   async asyncData ({ params, $axios }) {
-    const url = `/api/species/${params.id}`
+    const url = `api/species/${params.id}`
 
     const species = await $axios.$get(url)
-    const fishEntries = await $axios.$get(`${url}/fish-entries?order=desc.fish_weight&&page=1&per_page=15`)
-    const waterBodies = await $axios.$get(`${url}/water-bodies`)
+    const fishEntries = await $axios.$get(`api/fish-entries?species_id=${params.id}`)
+    const waterBodies = await $axios.$get(`api/features/fishable_waters.geojson?species_id=${params.id}`)
 
     return {
       species,
       fishEntries,
       waterBodies,
-      url
+      url,
+      params
     }
   },
 
@@ -301,7 +303,7 @@ export default {
           field: '',
           type: ''
         },
-        page: 1,
+        page: 0,
         perPage: 15
       },
       stateRecord: {
@@ -312,9 +314,23 @@ export default {
   },
 
   computed: {
+    hasWaterBodies () {
+      return this.waterBodies.features != null
+    },
+
+    numWaterBodies () {
+      return this.hasWaterBodies
+        ? this.waterBodies.features.length
+        : 0
+    },
+
+    photoUrl () {
+      return speciesImg[this.species.species] || 'https://ndow-cdn.s3-us-west-2.amazonaws.com/coming-soon-1200x800.jpg'
+    },
+
     rows () {
       return this.fishEntries.data
-        .map(m => {
+        .map((m) => {
           const dateCaught = new Date(m.date_caught)
 
           return {
@@ -327,35 +343,16 @@ export default {
             water_id: m.water_id,
             date_caught: dateCaught.getFullYear()
           }
-        }
-      )
+        })
     },
 
     querystring () {
       const querystring = new URLSearchParams()
-
-      // default ordering, don't change this for now
-      querystring.append('order', 'desc.fish_weight')
-
-      querystring.append('page', this.query.page || 1)
+      querystring.append('species_id', this.params.id)
+      querystring.append('page', this.query.page || 0)
       querystring.append('per_page', this.query.perPage || 15)
 
       return querystring.toString()
-    },
-
-    hasWaterBodies () {
-      return this.waterBodies.geojson.features != null
-    },
-
-    numWaterBodies () {
-      return this.hasWaterBodies
-        ? this.waterBodies.geojson.features.length
-        : 0
-    },
-
-    photoUrl () {
-      return speciesImg[this.species.species] || 'https://ndow-cdn.s3-us-west-2.amazonaws.com/coming-soon-1200x800.jpg'
-      // 'https://via.placeholder.com/1200x800'
     }
   },
 
@@ -367,11 +364,6 @@ export default {
       this.stateRecord.pounds = '-'
       this.stateRecord.ounces = '-'
     }
-
-    // this.$nextTick(() => {
-    //   this.stateRecord.pounds = this.fishEntries.data[0].pounds
-    //   this.stateRecord.ounces = this.fishEntries.data[0].ounces
-    // })
   },
 
   methods: {
@@ -390,7 +382,7 @@ export default {
     },
 
     async loadTable () {
-      const url = `${this.url}/fish-entries?${this.querystring}`
+      const url = `api/fish-entries?${this.querystring}`
       const data = await this.$axios.$get(url)
       this.fishEntries = data
     },
