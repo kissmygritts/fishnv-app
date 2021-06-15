@@ -1,7 +1,6 @@
 <template>
   <div class="bg-gray-100 min-h-full">
     <div id="content" class="content">
-
       <h1>Mercury in the Environment</h1>
 
       <h2>Fish Consumption Recommendations</h2>
@@ -36,16 +35,69 @@
       <p>
         Consider how much fish from all sources (caught and purchased) that you are likely to eat in a month and follow the recommendations accordingly.  Space your meals of fish evenly during the month when eating fish that have consumption recommendations.  For example, the consumption recommendation for brown trout from the Carson River near the Bryant Creek confluence is 8-meals per month.  This should be spaced out to 2-meals per week, rather than eating the entire 8-meals in a few days time.  Removing the skin does not decrease the amount of mercury in the edible portions.
       </p>
-      <p>
-        Click on one of the regions (Western, Southern, Eastern) below to find the recommended consumption rate of fish from a water that you may be fishing.  Consumption rates are in accordance with EPA guidelines (see EPA Publication: EPA 823-B-00-008, November 2000; Guidance for Assessing Chemical Contaminant Data for Use in Fish Advisories.  Vol. 2: Risk Assessment and Fish Consumption Limits, 3rd Edition. Table 4-3.)
-      </p>
+    </div>
 
+    <div class="flex flex-col mx-4 xl:mx-36">
+      <div class="overflow-x-auto">
+        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+          <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Region
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    County
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Water Name
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Species
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Meals Per Month
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr v-for="row in mercury" :key="row.id">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {{ row.region }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ row.county }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ row.water_name }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 capitalize">
+                    {{ row.species }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ row.meals_per_month }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HealthView_Mercury'
+  name: 'HealthPageMercury',
+
+  async asyncData ({ $axios }) {
+    const mercury = await $axios.$get('api/health/mercury')
+
+    return {
+      mercury
+    }
+  }
 }
 </script>
